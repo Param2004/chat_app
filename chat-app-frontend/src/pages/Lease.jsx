@@ -15,15 +15,51 @@ const Lease = () => {
     const [showRequests, setShowRequests] = useState(false);
     const [error, setError] = useState(null);
 
+    // const handleSeeRequests = async () => {
+    //     try {
+    //         const usernames = await fetchPendingRequests(username);
+    //         setPendingRequests(usernames);
+    //         setShowRequests(true);
+    //         setError(null);
+    //     } catch (error) {
+    //         console.error('Error fetching requests:', error);
+    //         setError('Failed to fetch pending requests');
+    //     }
+    // };
+
+    // Fetch Pending Requests
     const handleSeeRequests = async () => {
+        setShowRequests(true);
         try {
+            // Fetch nearby usernames with pending requests
             const usernames = await fetchPendingRequests(username);
-            setPendingRequests(usernames);
-            setShowRequests(true);
-            setError(null);
+            // Filter items by requested usernames
+            const response = await axios.get(`http://localhost:5000/api/items`);
+            const filteredItems = response.data.items.filter((item) =>
+                usernames.includes(item.requested_by) && item.request_status === 'pending'
+            );
+            setPendingRequests(filteredItems);
         } catch (error) {
-            console.error('Error fetching requests:', error);
+            console.error('Error fetching pending requests:', error);
             setError('Failed to fetch pending requests');
+        }
+    };
+
+    // Approve Request
+    const handleApproveRequest = async (itemId, approverUsername) => {
+        try {
+            await axios.put(`http://localhost:5000/api/items/${itemId}/approve`, {
+                lended_by: approverUsername,
+            });
+            // Update local state after approving the request
+            setPendingRequests((prevRequests) =>
+                prevRequests.map((item) =>
+                    item._id === itemId ? { ...item, lended_by: approverUsername, request_status: 'approved' } : item
+                )
+            );
+        } catch (error) {
+            console.error('Error approving request:', error);
+            setError('Failed to approve request');
         }
     };
 
@@ -132,9 +168,18 @@ const Lease = () => {
                     <h2 className="text-xl font-semibold mb-4">Pending Requests</h2>
                     {pendingRequests.length > 0 ? (
                         <ul>
-                            {pendingRequests.map((user, index) => (
-                                <li key={index} className="p-2 border-b last:border-none">
-                                    {user}
+                            {pendingRequests.map((item) => (
+                                <li key={item._id} className="p-2 border-b last:border-none flex justify-between">
+                                    <div>
+                                        <strong>{item.name}</strong>: {item.description} <br />
+                                        Requested by: {item.requested_by}
+                                    </div>
+                                    <button
+                                        className="ml-4 px-2 py-1 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 transition"
+                                        onClick={() => handleApproveRequest(item._id, username)}
+                                    >
+                                        Approve
+                                    </button>
                                 </li>
                             ))}
                         </ul>

@@ -145,6 +145,26 @@ app.get('/api/lended-items/:username', async (req, res) => {
 });
 
 
+app.put('/api/items/:id/approve', async (req, res) => {
+    const { id } = req.params;
+    const { lended_by } = req.body;
+
+    try {
+        // Update the item's lended_by field and set request_status to "approved"
+        const updatedItem = await Item.findByIdAndUpdate(
+            id,
+            { lended_by, request_status: 'approved' },
+            { new: true }
+        );
+
+        res.status(200).json({ success: true, item: updatedItem });
+    } catch (error) {
+        console.error('Error approving item request:', error);
+        res.status(500).json({ success: false, message: 'Error approving item request' });
+    }
+});
+
+
 
 // POST route to handle adding a new item
 app.post('/api/items', async (req, res) => {
