@@ -36,7 +36,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Seed />} />
         <Route path="/messages/:username" element={<Messages initiateChat={initiateChat} />} />
-        <Route path="/lease/:username" element={<Lease />} />
+        <Route path="/lease/:username" Component={Lease} />
         <Route path="/chat/:username/:otherUser" element={<Chat ws={ws} />} />
       </Routes>
     </Router>
