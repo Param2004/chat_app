@@ -68,7 +68,7 @@ const Lease = () => {
             {showForm && <AddItemForm username={username} onClose={() => setShowForm(false)} />}
 
             {/* Buttons to Fetch Leased and Lended Items */}
-            <div className='mt-40'>
+            <div className='mt-20'>
                 <button
                     className="w-full h-1/2 px-2 py-6 my-10 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition"
                     onClick={handleLeasedItems}
@@ -83,12 +83,9 @@ const Lease = () => {
                 </button>
             </div>
 
-            {/* Display Error Message */}
-            {error && <p className="text-red-500 mb-4">{error}</p>}
-
             {/* Display Leased Items */}
             {showLeasedItems && (
-                <div className="w-full max-w-md mt-8 p-4 bg-white rounded-lg shadow-md">
+                <div className="w-full max-w-md mt-24 p-4 bg-white rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold mb-4">Leased Items</h2>
                     {leasedItems.length > 0 ? (
                         <ul>
@@ -106,7 +103,7 @@ const Lease = () => {
 
             {/* Display Lended Items */}
             {showLendedItems && (
-                <div className="w-full max-w-md mt-8 p-4 bg-white rounded-lg shadow-md">
+                <div className="w-full max-w-md mt-24 p-4 bg-white rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold mb-4">Lended Items</h2>
                     {lendedItems.length > 0 ? (
                         <ul>
@@ -123,14 +120,11 @@ const Lease = () => {
             )}
 
             <button
-                className="w-full max-w-xs p-4 mb-6 mt-auto bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition"
+                className="w-full max-w-xs p-4 mt-28 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition"
                 onClick={handleSeeRequests}
             >
                 See Requests
             </button>
-
-            {/* Display error if location is unavailable */}
-            {error && <p className="text-red-500 mt-4">{error}</p>}
 
             {/* Display pending requests */}
             {showRequests && (
