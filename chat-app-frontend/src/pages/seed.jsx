@@ -12,7 +12,7 @@ const Seed = () => {
 
     const connectWebSocket = () => {
         if (username && !isConnected) {
-            const wsConnection = new WebSocket('ws://localhost:5000');
+            const wsConnection = new WebSocket('wss://chat-n-lease.onrender.com/');
             setWs(wsConnection);
 
             wsConnection.onopen = () => {

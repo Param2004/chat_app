@@ -13,7 +13,7 @@ const AddItemForm = ({ username, onClose }) => {
         setIsSubmitting(true);
 
         try {
-            await axios.post('http://localhost:5000/api/items', {
+            await axios.post('https://chat-n-lease.onrender.com/api/items', {
                 name: itemName,
                 description: itemDescription,
                 requested_by: username,
@@ -24,31 +24,6 @@ const AddItemForm = ({ username, onClose }) => {
                 amount: 0, // Set a default amount or handle it in the form if needed
                 rent_time: 1 // Set a default rent time or handle it in the form if needed
             });
-
-            // if (!navigator.geolocation) {
-            //     setError("Geolocation is not supported by this browser.");
-            //     return;
-            // }
-    
-            // navigator.geolocation.getCurrentPosition(
-            //     async (position) => {
-            //         const { latitude, longitude } = position.coords;
-    
-            //         try {
-            //             const response = await axios.get(`http://localhost:3000/api/users/`+username+`/nearby`);
-                        
-            //             // Assuming the API returns an array of usernames with pending requests
-            //             return response.data.usernames;
-            //         } catch (error) {
-            //             console.error('Error fetching pending requests:', error);
-            //             return [];
-            //         }
-            //     },
-            //     (err) => {
-            //         console.error("Geolocation error:", err);
-            //         setError("Failed to retrieve location. Please enable location services.");
-            //     }
-            // );
 
             setItemName('');
             setItemDescription('');

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Messages from './pages/Messages';
-import Seed from './pages/Seed';
+import Seed from './pages/seed';
 import Chat from './pages/Chat';
 import Lease from './pages/Lease';
 
@@ -14,7 +14,7 @@ const App = () => {
     if (ws) ws.close();
 
     // Open a new WebSocket connection
-    const newWs = new WebSocket(`ws://localhost:5000`);
+    const newWs = new WebSocket(`wss://chat-n-lease.onrender.com/`);
     setWs(newWs);
 
     newWs.onopen = () => {

@@ -9,7 +9,7 @@ const Chat = ({ ws }) => {
     useEffect(() => {
         const fetchChatHistory = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/messages/history/${username}/${otherUser}`);
+                const response = await fetch(`https://chat-n-lease.onrender.com/messages/history/${username}/${otherUser}`);
                 const data = await response.json();
                 if (data.success) {
                     setMessages(data.messages);

@@ -11,7 +11,7 @@ const Messages = ({ initiateChat }) => {
         // Fetch the users who have chatted with the current username
         const fetchUsers = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/messages/${username}`);
+                const response = await fetch(`https://chat-n-lease.onrender.com/messages/${username}`);
                 const data = await response.json();
 
                 if (data.success) {

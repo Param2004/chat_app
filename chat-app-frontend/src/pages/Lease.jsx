@@ -15,18 +15,6 @@ const Lease = () => {
     const [showRequests, setShowRequests] = useState(false);
     const [error, setError] = useState(null);
 
-    // const handleSeeRequests = async () => {
-    //     try {
-    //         const usernames = await fetchPendingRequests(username);
-    //         setPendingRequests(usernames);
-    //         setShowRequests(true);
-    //         setError(null);
-    //     } catch (error) {
-    //         console.error('Error fetching requests:', error);
-    //         setError('Failed to fetch pending requests');
-    //     }
-    // };
-
     // Fetch Pending Requests
     const handleSeeRequests = async () => {
         setShowRequests(true);
@@ -34,7 +22,7 @@ const Lease = () => {
             // Fetch nearby usernames with pending requests
             const usernames = await fetchPendingRequests(username);
             // Filter items by requested usernames
-            const response = await axios.get(`http://localhost:5000/api/items`);
+            const response = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
             const filteredItems = response.data.items.filter((item) =>
                 usernames.includes(item.requested_by) && item.request_status === 'pending'
             );
@@ -48,7 +36,7 @@ const Lease = () => {
     // Approve Request
     const handleApproveRequest = async (itemId, approverUsername) => {
         try {
-            await axios.put(`http://localhost:5000/api/items/${itemId}/approve`, {
+            await axios.put(`https://chat-n-lease.onrender.com/api/items/${itemId}/approve`, {
                 lended_by: approverUsername,
             });
             // Update local state after approving the request
@@ -68,7 +56,7 @@ const Lease = () => {
         setShowLeasedItems(true);
         setShowLendedItems(false);
         try {
-            const response = await axios.get(`http://localhost:5000/api/leased-items/${username}`);
+            const response = await axios.get(`https://chat-n-lease.onrender.com/api/leased-items/${username}`);
             setLeasedItems(response.data.leasedItems);
         } catch (error) {
             console.error('Error fetching leased items:', error);
@@ -81,7 +69,7 @@ const Lease = () => {
         setShowLendedItems(true);
         setShowLeasedItems(false);
         try {
-            const response = await axios.get(`http://localhost:5000/api/lended-items/${username}`);
+            const response = await axios.get(`https://chat-n-lease.onrender.com/api/lended-items/${username}`);
             setLendedItems(response.data.lendedItems);
         } catch (error) {
             console.error('Error fetching lended items:', error);
@@ -92,7 +80,7 @@ const Lease = () => {
     return (
         <div className="relative flex flex-col items-center h-screen bg-gray-100 p-4">
         <div>
-            <h2 className='mt-4 text-blue-500 font-bold text-xl'>ChatFR</h2>
+            <h2 className='mt-4 text-blue-500 font-extrabold text-2xl'>Chat N Lease</h2>
         </div>
             <button
                 className=" absolute right-2 top-2 mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition"
