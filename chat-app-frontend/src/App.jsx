@@ -1,4 +1,3 @@
-// client/src/App.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Messages from './pages/Messages';
@@ -10,10 +9,8 @@ const App = () => {
   const [ws, setWs] = useState(null);
 
   const initiateChat = (username, otherUser) => {
-    // Close any existing WebSocket connection
     if (ws) ws.close();
 
-    // Open a new WebSocket connection
     const newWs = new WebSocket(`wss://chat-n-lease.onrender.com/`);
     setWs(newWs);
 
@@ -36,7 +33,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Seed />} />
         <Route path="/messages/:username" element={<Messages initiateChat={initiateChat} />} />
-        <Route path="/lease/:username" Component={Lease} />
+        <Route path="/lease/:username" element={<Lease />} />
         <Route path="/chat/:username/:otherUser" element={<Chat ws={ws} />} />
       </Routes>
     </Router>
