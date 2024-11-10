@@ -25,6 +25,7 @@ const Lease = () => {
     
             // Fetch all items and handle potential errors with the API call
             const itemsResponse = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
+            console.log(itemsResponse)
             if (!itemsResponse.data.items) {
                 console.error("Error: No items found in itemsResponse");
                 return;

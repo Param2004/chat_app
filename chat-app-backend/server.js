@@ -164,7 +164,16 @@ app.put('/api/items/:id/approve', async (req, res) => {
     }
 });
 
-
+app.get('/api/items', async (req, res) => {
+    try {
+        // Fetch all items from the items collection
+        const items = await Item.find({});
+        res.status(200).json({ success: true, items });
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        res.status(500).json({ success: false, message: 'Error fetching items' });
+    }
+});
 
 // POST route to handle adding a new item
 app.post('/api/items', async (req, res) => {
