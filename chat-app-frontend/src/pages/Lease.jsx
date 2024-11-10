@@ -22,24 +22,20 @@ const Lease = () => {
             const response = await fetchPendingRequests(username);
             const usernames = response.map(user => user.username);
             console.log("Usernames with pending requests:", usernames);
+
+            const responses = await fetch(`http://localhost:5000/api/itemres`);
+            const data = await responses.json();
     
-            // Fetch all items and handle potential errors with the API call
-            const itemsResponse = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
-            console.log(itemsResponse)
-            if (!itemsResponse.data.items) {
-                console.error("Error: No items found in itemsResponse");
-                return;
-            }
-    
-            console.log("Fetched items:", itemsResponse.data.items);
+            console.log("Fetched items:", data.items);
     
             // Filter items based on requested_by usernames and pending status
-            const filteredItems = itemsResponse.data.items.filter(item =>
+            const filteredItems = data.items.filter(item =>
                 usernames.includes(item.requested_by) && item.request_status === 'pending'
             );
     
             console.log("Filtered items:", filteredItems);
             setPendingRequests(filteredItems);
+            
         } catch (error) {
             console.error('Error fetching pending requests or items:', error);
             setError('Failed to fetch pending requests');
@@ -50,7 +46,7 @@ const Lease = () => {
     // Approve Request
     const handleApproveRequest = async (itemId, approverUsername) => {
         try {
-            await axios.put(`https://chat-n-lease.onrender.com/api/items/${itemId}/approve`, {
+            await axios.put(`http://localhost:5000/api/items/${itemId}/approve`, {
                 lended_by: approverUsername,
             });
             // Update local state after approving the request
@@ -70,7 +66,7 @@ const Lease = () => {
         setShowLeasedItems(true);
         setShowLendedItems(false);
         try {
-            const response = await axios.get(`https://chat-n-lease.onrender.com/api/leased-items/${username}`);
+            const response = await axios.get(`http://localhost:5000/api/leased-items/${username}`);
             setLeasedItems(response.data.leasedItems);
         } catch (error) {
             console.error('Error fetching leased items:', error);
@@ -83,7 +79,7 @@ const Lease = () => {
         setShowLendedItems(true);
         setShowLeasedItems(false);
         try {
-            const response = await axios.get(`https://chat-n-lease.onrender.com/api/lended-items/${username}`);
+            const response = await axios.get(`http://localhost:5000/api/lended-items/${username}`);
             setLendedItems(response.data.lendedItems);
         } catch (error) {
             console.error('Error fetching lended items:', error);

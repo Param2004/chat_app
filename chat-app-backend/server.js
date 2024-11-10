@@ -164,7 +164,7 @@ app.put('/api/items/:id/approve', async (req, res) => {
     }
 });
 
-app.get('/api/items', async (req, res) => {
+app.get('/api/itemres', async (req, res) => {
     try {
         // Fetch all items from the items collection
         const items = await Item.find({});
