@@ -20,18 +20,24 @@ const Lease = () => {
         setShowRequests(true);
         try {
             // Fetch nearby usernames with pending requests
-            const usernames = await fetchPendingRequests(username);
-            // Filter items by requested usernames
-            const response = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
-            const filteredItems = response.data.items.filter((item) =>
+            const response = await fetchPendingRequests(username);
+    
+            // Extract usernames from the API response
+            const usernames = response.map(user => user.username);
+    
+            // Fetch all items and filter by requested usernames
+            const itemsResponse = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
+            const filteredItems = itemsResponse.data.items.filter(item =>
                 usernames.includes(item.requested_by) && item.request_status === 'pending'
             );
+    
             setPendingRequests(filteredItems);
         } catch (error) {
             console.error('Error fetching pending requests:', error);
             setError('Failed to fetch pending requests');
         }
     };
+    
 
     // Approve Request
     const handleApproveRequest = async (itemId, approverUsername) => {
