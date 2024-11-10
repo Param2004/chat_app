@@ -15,25 +15,32 @@ const Lease = () => {
     const [showRequests, setShowRequests] = useState(false);
     const [error, setError] = useState(null);
 
-    // Fetch Pending Requests
     const handleSeeRequests = async () => {
         setShowRequests(true);
         try {
             // Fetch nearby usernames with pending requests
             const response = await fetchPendingRequests(username);
-    
-            // Extract usernames from the API response
             const usernames = response.map(user => user.username);
+            console.log("Usernames with pending requests:", usernames);
     
-            // Fetch all items and filter by requested usernames
+            // Fetch all items and handle potential errors with the API call
             const itemsResponse = await axios.get(`https://chat-n-lease.onrender.com/api/items`);
+            if (!itemsResponse.data.items) {
+                console.error("Error: No items found in itemsResponse");
+                return;
+            }
+    
+            console.log("Fetched items:", itemsResponse.data.items);
+    
+            // Filter items based on requested_by usernames and pending status
             const filteredItems = itemsResponse.data.items.filter(item =>
                 usernames.includes(item.requested_by) && item.request_status === 'pending'
             );
     
+            console.log("Filtered items:", filteredItems);
             setPendingRequests(filteredItems);
         } catch (error) {
-            console.error('Error fetching pending requests:', error);
+            console.error('Error fetching pending requests or items:', error);
             setError('Failed to fetch pending requests');
         }
     };
