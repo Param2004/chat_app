@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchPendingRequests = async (username) => {
     try {
-        const response = await axios.get(`http://localhost:3000/api/users/${username}/nearby`
+        const response = await axios.get(`https://levelup-6gdt.onrender.com/api/users/${username}/nearby`
             // , { headers: {'ngrok-skip-browser-warning': 'true'} }
         );
         // console.log(response.data);
