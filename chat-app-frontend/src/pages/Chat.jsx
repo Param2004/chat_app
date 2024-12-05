@@ -55,7 +55,7 @@ const Chat = ({ ws }) => {
     // const name = String(otherUser[0]).toUpperCase() + String(otherUser).slice(1);
 
     return (
-        <div className="flex flex-col h-screen bg-gray-100 p-4">
+        <div className="flex flex-col h-screen bg-gray-100 select-none p-4">
             {/* <h2 className="text-2xl font-bold text-center mb-4">{name}</h2> */}
             <div className="flex-grow overflow-y-scroll p-4 space-y-2 bg-white rounded-md shadow-md">
                 {messages.map((msg, index) => (

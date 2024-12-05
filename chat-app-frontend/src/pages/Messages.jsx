@@ -36,7 +36,7 @@ const Messages = ({ initiateChat }) => {
     };
 
     return (
-        <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
+        <div className="flex flex-col items-center p-4 bg-gray-100 select-none min-h-screen">
             <h2 className="text-3xl font-bold mb-4">My Chats</h2>
             <div className="w-full max-w-md space-y-3">
                 {users.map((user, index) => (

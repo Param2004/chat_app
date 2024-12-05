@@ -88,7 +88,7 @@ const Lease = () => {
     };
 
     return (
-        <div className="relative flex flex-col items-center h-screen bg-gray-100 p-4">
+        <div className="relative flex flex-col items-center select-none h-screen bg-gray-100 p-4">
         <div>
             <h2 className='mt-4 text-blue-500 font-extrabold text-2xl'>Chat N Lease</h2>
         </div>
